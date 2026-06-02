@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolsa de Empleo</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        nav {
+            background-color: #1f2937;
+            padding: 14px 30px;
+        }
+
+        .nav-contenido {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.88);
+            text-decoration: none;
+            font-size: 0.92rem;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .nav-links .btn-nav {
+            background-color: rgba(255,255,255,0.12);
+            padding: 8px 12px;
+            border-radius: 6px;
+            color: white;
+        }
+
+        .pagina {
+            padding: 36px 20px;
+        }
+
+        .contenedor {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .presentacion {
+            background: white;
+            border: 1px solid #d9e1e7;
+            border-radius: 10px;
+            padding: 28px;
+            margin-bottom: 22px;
+        }
+
+        .presentacion h1 {
+            font-size: 1.6rem;
+            color: #22364d;
+            margin-bottom: 10px;
+        }
+
+        .presentacion p {
+            color: #6b7280;
+            font-size: 0.93rem;
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            border: 1px solid transparent;
+            font-size: 0.92rem;
+        }
+
+        .btn-principal {
+            background-color: #2f6fad;
+            color: white;
+        }
+
+        .btn-principal:hover {
+            background-color: #275e92;
+        }
+
+        .btn-secundario {
+            background-color: #eef3f7;
+            color: #27405d;
+            border: 1px solid #cfd9e3;
+        }
+
+        .btn-secundario:hover {
+            background-color: #e3ebf2;
+        }
+
+        .seccion {
+            margin-top: 10px;
+        }
+
+        .seccion h2 {
+            font-size: 1.2rem;
+            color: #22364d;
+            margin-bottom: 6px;
+        }
+
+        .seccion p {
+            color: #6b7280;
+            font-size: 0.92rem;
+            margin-bottom: 18px;
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .job-card {
+            background: white;
+            border: 1px solid #d9e1e7;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .job-card h3 {
+            font-size: 1rem;
+            color: #22364d;
+            margin-bottom: 6px;
+        }
+
+        .empresa {
+            font-size: 0.87rem;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .descripcion {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .salario {
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.78rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background-color: #e8f0f8;
+            color: #2f6fad;
+            border: 1px solid #c6d8ea;
+        }
+
+        .empty-box {
+            background: white;
+            border: 1px dashed #c7d1dc;
+            border-radius: 8px;
+            padding: 30px 20px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.94rem;
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-contenido">
+        <a class="logo" th:href="@{/}">BolsaEmpleo</a>
+
+        <div class="nav-links">
+            <a th:href="@{/buscar-puestos}">Buscar puestos</a>
+            <a th:href="@{/registro/empresa}">Registro empresa</a>
+            <a th:href="@{/login}" class="btn-nav">Iniciar sesión</a>
+        </div>
+    </div>
+</nav>
+
+<div class="pagina">
+    <div class="contenedor">
+        <div class="presentacion">
+            <h1>Bolsa de empleo</h1>
+            <p>Consulta puestos públicos, regístrate como candidato o registra una empresa para publicar vacantes.</p>
+
+            <div class="acciones">
+                <a class="btn btn-principal" th:href="@{/registro/oferente}">Registro candidato</a>
+                <a class="btn btn-secundario" th:href="@{/registro/empresa}">Registro empresa</a>
+                <a class="btn btn-secundario" th:href="@{/buscar-puestos}">Ver puestos</a>
+            </div>
+        </div>
+
+        <div class="seccion" id="ofertas">
+            <h2>Puestos recientes</h2>
+            <p>Últimos puestos públicos registrados en la plataforma.</p>
+
+            <div class="jobs-grid">
+                <div class="job-card"
+                     th:each="puesto : ${puestos}"
+                     th:title="${puesto.descripcion}">
+                    <h3 th:text="${puesto.titulo}">Título del puesto</h3>
+                    <p class="empresa" th:text="${puesto.empresa.nombre}">Empresa</p>
+                    <p class="descripcion" th:text="${puesto.descripcion}">Descripción del puesto</p>
+                    <p class="salario">
+                        <strong>Salario:</strong>
+                        <span th:text="${puesto.salario}">0.0</span>
+                    </p>
+                    <span class="tag">Público</span>
+                </div>
+
+                <div class="empty-box" th:if="${#lists.isEmpty(puestos)}">
+                    Aún no hay puestos públicos registrados.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

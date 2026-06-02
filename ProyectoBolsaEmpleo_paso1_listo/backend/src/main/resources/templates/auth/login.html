@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        nav {
+            background-color: #1f2937;
+            padding: 14px 30px;
+        }
+
+        .nav-contenido {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.88);
+            text-decoration: none;
+            font-size: 0.92rem;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .pagina {
+            padding: 50px 20px;
+        }
+
+        .contenedor {
+            max-width: 430px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #d9e1e7;
+            border-radius: 10px;
+            padding: 28px;
+        }
+
+        .card h1 {
+            font-size: 1.4rem;
+            color: #22364d;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .subtitulo {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 22px;
+            text-align: center;
+        }
+
+        .alerta {
+            padding: 11px 13px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .alerta-error {
+            background: #fdeeee;
+            color: #c53030;
+            border: 1px solid #f2c6c6;
+        }
+
+        .alerta-ok {
+            background: #edf7ee;
+            color: #2f855a;
+            border: 1px solid #c8e5d0;
+        }
+
+        .alerta-info {
+            background: #eef4f8;
+            color: #2f6fad;
+            border: 1px solid #cfe0ec;
+        }
+
+        .campo {
+            margin-bottom: 16px;
+        }
+
+        .campo label {
+            display: block;
+            font-size: 0.84rem;
+            color: #555;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .campo input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccd4dd;
+            border-radius: 6px;
+            font-size: 0.94rem;
+            font-family: inherit;
+            background-color: #fafbfd;
+        }
+
+        .campo input:focus {
+            outline: none;
+            border-color: #2f6fad;
+            background-color: white;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 11px;
+            background-color: #2f6fad;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #275e92;
+        }
+
+        .links {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .links a {
+            font-size: 0.9rem;
+            color: #2f6fad;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-contenido">
+        <a class="logo" th:href="@{/}">BolsaEmpleo</a>
+
+        <div class="nav-links">
+            <a th:href="@{/}">Inicio</a>
+            <a th:href="@{/buscar-puestos}">Buscar puestos</a>
+        </div>
+    </div>
+</nav>
+
+<div class="pagina">
+    <div class="contenedor">
+        <div class="card">
+            <h1>Iniciar sesión</h1>
+            <p class="subtitulo">Ingresa tus datos para continuar.</p>
+
+            <div class="alerta alerta-ok" th:if="${mensaje}" th:text="${mensaje}"></div>
+            <div class="alerta alerta-error" th:if="${param.error}">Credenciales inválidas o usuario no aprobado.</div>
+            <div class="alerta alerta-info" th:if="${param.logout}">Sesión cerrada correctamente.</div>
+
+            <form th:action="@{/login}" method="post">
+                <div class="campo">
+                    <label for="username">Correo electrónico</label>
+                    <input type="text" id="username" name="username" placeholder="tu@correo.com" required>
+                </div>
+
+                <div class="campo">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <button type="submit">Entrar</button>
+            </form>
+
+            <div class="links">
+                <a th:href="@{/registro/oferente}">Registrarme como candidato</a>
+                <a th:href="@{/registro/empresa}">Registrar empresa</a>
+                <a th:href="@{/}">Volver al inicio</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

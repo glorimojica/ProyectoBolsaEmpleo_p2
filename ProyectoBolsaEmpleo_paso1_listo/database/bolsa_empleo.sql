@@ -1,0 +1,3 @@
+-- Script de base de datos del proyecto Bolsa de Empleo.
+-- Este archivo queda preparado en la carpeta database para completarlo en el paso correspondiente.
+-- No se modificó el modelo ni la lógica de base de datos en este paso.

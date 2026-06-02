@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear puesto</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        nav {
+            background-color: #1f2937;
+            padding: 14px 30px;
+        }
+
+        .nav-contenido {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.88);
+            text-decoration: none;
+            font-size: 0.92rem;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .pagina {
+            padding: 36px 20px;
+        }
+
+        .contenedor {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #d9e1e7;
+            border-radius: 10px;
+            padding: 28px;
+        }
+
+        .card h1 {
+            font-size: 1.45rem;
+            color: #22364d;
+            margin-bottom: 6px;
+        }
+
+        .subtitulo {
+            color: #6b7280;
+            font-size: 0.92rem;
+            margin-bottom: 22px;
+        }
+
+        .alerta-error {
+            background: #fdeeee;
+            color: #c53030;
+            border: 1px solid #f2c6c6;
+            padding: 12px 14px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            font-size: 0.92rem;
+        }
+
+        .campo {
+            margin-bottom: 18px;
+        }
+
+        .campo label {
+            display: block;
+            font-size: 0.84rem;
+            color: #555;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .campo input,
+        .campo textarea,
+        .campo select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccd4dd;
+            border-radius: 6px;
+            font-size: 0.94rem;
+            font-family: inherit;
+            background-color: #fafbfd;
+        }
+
+        .campo textarea {
+            resize: vertical;
+            min-height: 130px;
+            line-height: 1.5;
+        }
+
+        .campo input:focus,
+        .campo textarea:focus,
+        .campo select:focus {
+            outline: none;
+            border-color: #2f6fad;
+            background-color: white;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.92rem;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-principal {
+            background-color: #2f6fad;
+            color: white;
+        }
+
+        .btn-principal:hover {
+            background-color: #275e92;
+        }
+
+        .btn-secundario {
+            background-color: #eef3f7;
+            color: #27405d;
+            border-color: #cfd9e3;
+        }
+
+        .btn-secundario:hover {
+            background-color: #e3ebf2;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-contenido">
+        <a class="logo" th:href="@{/empresa/dashboard}">BolsaEmpleo</a>
+
+        <div class="nav-links">
+            <a th:href="@{/empresa/dashboard}">Dashboard</a>
+            <a th:href="@{/empresa/puestos}">Mis puestos</a>
+            <a th:href="@{/empresa/puestos/nuevo}">Publicar puesto</a>
+        </div>
+    </div>
+</nav>
+
+<div class="pagina">
+    <div class="contenedor">
+        <div class="card">
+            <h1>Crear puesto</h1>
+            <p class="subtitulo">Completa la información de la nueva vacante.</p>
+
+            <form th:action="@{/empresa/puestos}" th:object="${puesto}" method="post">
+                <div th:if="${error}" class="alerta-error" th:text="${error}"></div>
+
+                <div class="campo">
+                    <label for="titulo">Título del puesto</label>
+                    <input type="text" id="titulo" th:field="*{titulo}" placeholder="Ej. Analista de procesos" required>
+                </div>
+
+                <div class="campo">
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion" th:field="*{descripcion}" placeholder="Describe las funciones y requisitos del puesto." required></textarea>
+                </div>
+
+                <div class="campo">
+                    <label for="salario">Salario</label>
+                    <input type="number" id="salario" step="0.01" th:field="*{salario}" required>
+                </div>
+
+                <div class="campo">
+                    <label for="publico">Tipo de publicación</label>
+                    <select id="publico" th:field="*{publico}">
+                        <option th:value="true">Público</option>
+                        <option th:value="false">Privado</option>
+                    </select>
+                </div>
+
+                <div class="acciones">
+                    <button type="submit" class="btn btn-principal">Guardar puesto</button>
+                    <a th:href="@{/empresa/puestos}" class="btn btn-secundario">Volver</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>>

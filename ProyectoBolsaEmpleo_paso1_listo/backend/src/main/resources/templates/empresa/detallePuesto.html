@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del puesto</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        nav {
+            background-color: #1f2937;
+            padding: 14px 30px;
+        }
+
+        .nav-contenido {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.88);
+            text-decoration: none;
+            font-size: 0.92rem;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .pagina {
+            padding: 36px 20px;
+        }
+
+        .contenedor {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #d9e1e7;
+            border-radius: 10px;
+            padding: 28px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            color: #22364d;
+            margin-bottom: 6px;
+        }
+
+        .header p {
+            color: #6b7280;
+            font-size: 0.92rem;
+        }
+
+        .detalle {
+            display: grid;
+            gap: 14px;
+        }
+
+        .item {
+            background-color: #fafbfd;
+            border: 1px solid #e3e8ee;
+            border-radius: 8px;
+            padding: 14px;
+        }
+
+        .item strong {
+            display: block;
+            font-size: 0.82rem;
+            color: #32465a;
+            margin-bottom: 6px;
+        }
+
+        .item span {
+            font-size: 0.94rem;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .badge-publico {
+            background-color: #e8f0f8;
+            color: #2f6fad;
+            border: 1px solid #c6d8ea;
+        }
+
+        .badge-privado {
+            background-color: #efefef;
+            color: #555;
+            border: 1px solid #d6d6d6;
+        }
+
+        .badge-activo {
+            background-color: #eaf7ef;
+            color: #2f855a;
+            border: 1px solid #c7e5d3;
+        }
+
+        .badge-inactivo {
+            background-color: #fdeeee;
+            color: #c53030;
+            border: 1px solid #f2c6c6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.92rem;
+            border: 1px solid #cfd9e3;
+            background-color: #eef3f7;
+            color: #27405d;
+        }
+
+        .btn:hover {
+            background-color: #e3ebf2;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-contenido">
+        <a class="logo" th:href="@{/empresa/dashboard}">BolsaEmpleo</a>
+
+        <div class="nav-links">
+            <a th:href="@{/empresa/dashboard}">Dashboard</a>
+            <a th:href="@{/empresa/puestos}">Mis puestos</a>
+            <a th:href="@{/empresa/puestos/nuevo}">Publicar puesto</a>
+        </div>
+    </div>
+</nav>
+
+<div class="pagina">
+    <div class="contenedor">
+        <div class="card">
+            <div class="header">
+                <div>
+                    <h1>Detalle del puesto</h1>
+                    <p>Información general de la vacante publicada.</p>
+                </div>
+
+                <a th:href="@{/empresa/puestos}" class="btn">Volver</a>
+            </div>
+
+            <div class="detalle">
+                <div class="item">
+                    <strong>ID</strong>
+                    <span th:text="${puesto.id}">1</span>
+                </div>
+
+                <div class="item">
+                    <strong>Título</strong>
+                    <span th:text="${puesto.titulo}">Desarrollador Java</span>
+                </div>
+
+                <div class="item">
+                    <strong>Descripción</strong>
+                    <span th:text="${puesto.descripcion}">Descripción del puesto</span>
+                </div>
+
+                <div class="item">
+                    <strong>Salario</strong>
+                    <span th:text="${puesto.salario}">850000</span>
+                </div>
+
+                <div class="item">
+                    <strong>Tipo de publicación</strong>
+                    <span th:class="${puesto.publico} ? 'badge badge-publico' : 'badge badge-privado'"
+                          th:text="${puesto.publico} ? 'Público' : 'Privado'">Público</span>
+                </div>
+
+                <div class="item">
+                    <strong>Estado</strong>
+                    <span th:class="${puesto.activo} ? 'badge badge-activo' : 'badge badge-inactivo'"
+                          th:text="${puesto.activo} ? 'Activo' : 'Inactivo'">Activo</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

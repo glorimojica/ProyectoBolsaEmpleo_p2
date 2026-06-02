@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oferentes pendientes</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        nav {
+            background-color: #1f2937;
+            padding: 14px 30px;
+        }
+
+        .nav-contenido {
+            max-width: 1250px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.88);
+            text-decoration: none;
+            font-size: 0.92rem;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .pagina {
+            padding: 36px 20px;
+        }
+
+        .contenedor {
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #d9e1e7;
+            border-radius: 10px;
+            padding: 28px;
+        }
+
+        .card h1 {
+            font-size: 1.5rem;
+            color: #22364d;
+            margin-bottom: 6px;
+        }
+
+        .subtitulo {
+            color: #6b7280;
+            font-size: 0.92rem;
+            margin-bottom: 22px;
+            line-height: 1.5;
+        }
+
+        .tabla-wrapper {
+            overflow-x: auto;
+            border: 1px solid #dde3ea;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1050px;
+            background: white;
+        }
+
+        thead {
+            background-color: #f3f5f7;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #e7edf2;
+            vertical-align: top;
+            font-size: 0.92rem;
+        }
+
+        th {
+            color: #32465a;
+            font-weight: 600;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #fafbfd;
+        }
+
+        .correo {
+            color: #2f6fad;
+        }
+
+        .acciones {
+            min-width: 220px;
+        }
+
+        .form-aprobar {
+            margin-bottom: 10px;
+        }
+
+        .motivo-rechazo {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccd4dd;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            background-color: #fafbfd;
+            margin-bottom: 8px;
+        }
+
+        .motivo-rechazo:focus {
+            outline: none;
+            border-color: #2f6fad;
+            background-color: white;
+        }
+
+        .btn {
+            padding: 9px 12px;
+            border-radius: 6px;
+            border: none;
+            font-size: 0.9rem;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .btn-principal {
+            background-color: #2f6fad;
+            color: white;
+            width: 100%;
+        }
+
+        .btn-principal:hover {
+            background-color: #275e92;
+        }
+
+        .btn-danger {
+            background-color: #d9534f;
+            color: white;
+            width: 100%;
+        }
+
+        .btn-danger:hover {
+            background-color: #c64541;
+        }
+
+        .acciones-footer {
+            margin-top: 18px;
+        }
+
+        .acciones-footer a {
+            display: inline-block;
+            padding: 10px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.92rem;
+            background-color: #eef3f7;
+            color: #27405d;
+            border: 1px solid #cfd9e3;
+        }
+
+        .acciones-footer a:hover {
+            background-color: #e3ebf2;
+        }
+
+        .empty-box {
+            background: #fafbfd;
+            border: 1px dashed #c7d1dc;
+            border-radius: 8px;
+            padding: 30px 20px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.94rem;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-contenido">
+        <a class="logo" th:href="@{/admin/dashboard}">BolsaEmpleo</a>
+
+        <div class="nav-links">
+            <a th:href="@{/admin/dashboard}">Dashboard</a>
+            <a th:href="@{/admin/caracteristicas}">Características</a>
+        </div>
+    </div>
+</nav>
+
+<div class="pagina">
+    <div class="contenedor">
+        <div class="card">
+            <h1>Oferentes pendientes</h1>
+            <p class="subtitulo">Revisa los oferentes registrados y decide si los apruebas o rechazas.</p>
+
+            <div th:if="${#lists.isEmpty(oferentes)}" class="empty-box">
+                No hay oferentes pendientes en este momento.
+            </div>
+
+            <div th:if="${not #lists.isEmpty(oferentes)}" class="tabla-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Identificación</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Nacionalidad</th>
+                        <th>Teléfono</th>
+                        <th>Residencia</th>
+                        <th>Correo</th>
+                        <th>Acción</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="oferente : ${oferentes}">
+                        <td th:text="${oferente.identificacion}">1-1234-5678</td>
+                        <td th:text="${oferente.nombre}">Nombre</td>
+                        <td th:text="${oferente.apellido}">Apellido</td>
+                        <td th:text="${oferente.nacionalidad}">Costarricense</td>
+                        <td th:text="${oferente.telefono}">8888-8888</td>
+                        <td th:text="${oferente.residencia}">Heredia</td>
+                        <td class="correo" th:text="${oferente.usuario.correo}">correo@correo.com</td>
+                        <td class="acciones">
+                            <form class="form-aprobar"
+                                  th:action="@{/admin/aprobar-oferente/{id}(id=${oferente.usuario.id})}"
+                                  method="post">
+                                <button class="btn btn-principal" type="submit">Aprobar</button>
+                            </form>
+
+                            <form th:action="@{/admin/rechazar-oferente/{id}(id=${oferente.usuario.id})}"
+                                  method="post">
+                                <input class="motivo-rechazo" type="text" name="comentario" placeholder="Motivo del rechazo" required>
+                                <button class="btn btn-danger" type="submit">Rechazar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="acciones-footer">
+                <a th:href="@{/admin/dashboard}">Volver</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

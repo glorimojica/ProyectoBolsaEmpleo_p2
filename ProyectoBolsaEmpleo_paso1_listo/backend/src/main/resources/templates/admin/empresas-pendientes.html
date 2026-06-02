@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empresas pendientes</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+      min-height: 100vh;
+    }
+
+    nav {
+      background-color: #1f2937;
+      padding: 14px 30px;
+    }
+
+    .nav-contenido {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      color: white;
+      text-decoration: none;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.88);
+      text-decoration: none;
+      font-size: 0.92rem;
+    }
+
+    .nav-links a:hover {
+      color: white;
+    }
+
+    .pagina {
+      padding: 36px 20px;
+    }
+
+    .contenedor {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #d9e1e7;
+      border-radius: 10px;
+      padding: 28px;
+    }
+
+    .card h1 {
+      font-size: 1.5rem;
+      color: #22364d;
+      margin-bottom: 6px;
+    }
+
+    .subtitulo {
+      color: #6b7280;
+      font-size: 0.92rem;
+      margin-bottom: 22px;
+      line-height: 1.5;
+    }
+
+    .tabla-wrapper {
+      overflow-x: auto;
+      border: 1px solid #dde3ea;
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 950px;
+      background: white;
+    }
+
+    thead {
+      background-color: #f3f5f7;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid #e7edf2;
+      vertical-align: top;
+      font-size: 0.92rem;
+    }
+
+    th {
+      color: #32465a;
+      font-weight: 600;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #fafbfd;
+    }
+
+    .descripcion {
+      max-width: 260px;
+      color: #555;
+      line-height: 1.45;
+    }
+
+    .correo {
+      color: #2f6fad;
+    }
+
+    .acciones {
+      min-width: 220px;
+    }
+
+    .form-aprobar {
+      margin-bottom: 10px;
+    }
+
+    .motivo-rechazo {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccd4dd;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      background-color: #fafbfd;
+      margin-bottom: 8px;
+    }
+
+    .motivo-rechazo:focus {
+      outline: none;
+      border-color: #2f6fad;
+      background-color: white;
+    }
+
+    .btn {
+      padding: 9px 12px;
+      border-radius: 6px;
+      border: none;
+      font-size: 0.9rem;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .btn-principal {
+      background-color: #2f6fad;
+      color: white;
+      width: 100%;
+    }
+
+    .btn-principal:hover {
+      background-color: #275e92;
+    }
+
+    .btn-danger {
+      background-color: #d9534f;
+      color: white;
+      width: 100%;
+    }
+
+    .btn-danger:hover {
+      background-color: #c64541;
+    }
+
+    .acciones-footer {
+      margin-top: 18px;
+    }
+
+    .acciones-footer a {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.92rem;
+      background-color: #eef3f7;
+      color: #27405d;
+      border: 1px solid #cfd9e3;
+    }
+
+    .acciones-footer a:hover {
+      background-color: #e3ebf2;
+    }
+
+    .empty-box {
+      background: #fafbfd;
+      border: 1px dashed #c7d1dc;
+      border-radius: 8px;
+      padding: 30px 20px;
+      text-align: center;
+      color: #6b7280;
+      font-size: 0.94rem;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-contenido">
+    <a class="logo" th:href="@{/admin/dashboard}">BolsaEmpleo</a>
+
+    <div class="nav-links">
+      <a th:href="@{/admin/dashboard}">Dashboard</a>
+      <a th:href="@{/admin/caracteristicas}">Características</a>
+    </div>
+  </div>
+</nav>
+
+<div class="pagina">
+  <div class="contenedor">
+    <div class="card">
+      <h1>Empresas pendientes</h1>
+      <p class="subtitulo">Revisa las empresas registradas y decide si las apruebas o rechazas.</p>
+
+      <div th:if="${#lists.isEmpty(empresas)}" class="empty-box">
+        No hay empresas pendientes en este momento.
+      </div>
+
+      <div th:if="${not #lists.isEmpty(empresas)}" class="tabla-wrapper">
+        <table>
+          <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Localización</th>
+            <th>Descripción</th>
+            <th>Correo</th>
+            <th>Acción</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="empresa : ${empresas}">
+            <td th:text="${empresa.nombre}">Nombre Empresa</td>
+            <td th:text="${empresa.telefono}">2222-2222</td>
+            <td th:text="${empresa.localizacion}">Heredia</td>
+            <td class="descripcion" th:text="${empresa.descripcion}">Descripción</td>
+            <td class="correo" th:text="${empresa.usuario.correo}">correo@empresa.com</td>
+            <td class="acciones">
+              <form class="form-aprobar"
+                    th:action="@{/admin/aprobar-empresa/{id}(id=${empresa.usuario.id})}"
+                    method="post">
+                <button class="btn btn-principal" type="submit">Aprobar</button>
+              </form>
+
+              <form th:action="@{/admin/rechazar-empresa/{id}(id=${empresa.usuario.id})}"
+                    method="post">
+                <input class="motivo-rechazo" type="text" name="comentario" placeholder="Motivo del rechazo" required>
+                <button class="btn btn-danger" type="submit">Rechazar</button>
+              </form>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="acciones-footer">
+        <a th:href="@{/admin/dashboard}">Volver</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Empresa</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        nav {
+            background-color: #1f2937;
+            padding: 14px 30px;
+        }
+
+        .nav-contenido {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.88);
+            text-decoration: none;
+            font-size: 0.92rem;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .pagina {
+            padding: 36px 20px;
+        }
+
+        .contenedor {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .card-principal {
+            background: white;
+            border: 1px solid #d9e1e7;
+            border-radius: 10px;
+            padding: 28px;
+            margin-bottom: 20px;
+        }
+
+        .card-principal h1 {
+            font-size: 1.55rem;
+            color: #22364d;
+            margin-bottom: 8px;
+        }
+
+        .card-principal p {
+            color: #6b7280;
+            font-size: 0.93rem;
+            line-height: 1.5;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .opcion {
+            background: white;
+            border: 1px solid #d9e1e7;
+            border-radius: 10px;
+            padding: 22px;
+        }
+
+        .opcion h2 {
+            font-size: 1.08rem;
+            color: #22364d;
+            margin-bottom: 8px;
+        }
+
+        .opcion p {
+            font-size: 0.92rem;
+            color: #6b7280;
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.92rem;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-principal {
+            background-color: #2f6fad;
+            color: white;
+        }
+
+        .btn-principal:hover {
+            background-color: #275e92;
+        }
+
+        .btn-secundario {
+            background-color: #eef3f7;
+            color: #27405d;
+            border-color: #cfd9e3;
+        }
+
+        .btn-secundario:hover {
+            background-color: #e3ebf2;
+        }
+
+        form {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-contenido">
+        <a class="logo" th:href="@{/empresa/dashboard}">BolsaEmpleo</a>
+
+        <div class="nav-links">
+            <a th:href="@{/empresa/dashboard}">Dashboard</a>
+            <a th:href="@{/empresa/puestos}">Mis puestos</a>
+            <a th:href="@{/empresa/puestos/nuevo}">Publicar puesto</a>
+        </div>
+    </div>
+</nav>
+
+<div class="pagina">
+    <div class="contenedor">
+        <div class="card-principal">
+            <h1>Empresa - dashboard</h1>
+            <p>Desde aquí puedes administrar tus puestos y revisar los candidatos asociados a cada publicación.</p>
+        </div>
+
+        <div class="grid">
+            <div class="opcion">
+                <h2>Mis puestos</h2>
+                <p>Consulta los puestos publicados, su estado y sus candidatos.</p>
+                <a th:href="@{/empresa/puestos}" class="btn btn-principal">Ver mis puestos</a>
+            </div>
+
+            <div class="opcion">
+                <h2>Publicar puesto</h2>
+                <p>Registra una nueva vacante con su descripción, salario y tipo de publicación.</p>
+                <a th:href="@{/empresa/puestos/nuevo}" class="btn btn-principal">Crear puesto</a>
+            </div>
+
+            <div class="opcion">
+                <h2>Cerrar sesión</h2>
+                <p>Finaliza tu sesión cuando termines de trabajar en la plataforma.</p>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-secundario">Cerrar sesión</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

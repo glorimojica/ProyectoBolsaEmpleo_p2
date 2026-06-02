@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Empresa</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        nav {
+            background-color: #1f2937;
+            padding: 14px 30px;
+        }
+
+        .nav-contenido {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.88);
+            text-decoration: none;
+            font-size: 0.92rem;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .pagina {
+            padding: 40px 20px;
+        }
+
+        .contenedor {
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #d9e1e7;
+            border-radius: 10px;
+            padding: 28px;
+        }
+
+        .card h1 {
+            font-size: 1.4rem;
+            color: #22364d;
+            margin-bottom: 6px;
+        }
+
+        .subtitulo {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 22px;
+        }
+
+        .alerta-error {
+            background: #fdeeee;
+            color: #c53030;
+            border: 1px solid #f2c6c6;
+            padding: 12px 14px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            font-size: 0.9rem;
+        }
+
+        .fila {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .campo {
+            margin-bottom: 16px;
+        }
+
+        .campo label {
+            display: block;
+            font-size: 0.84rem;
+            color: #555;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .campo input,
+        .campo textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccd4dd;
+            border-radius: 6px;
+            font-size: 0.94rem;
+            font-family: inherit;
+            background-color: #fafbfd;
+        }
+
+        .campo textarea {
+            resize: vertical;
+            min-height: 100px;
+            line-height: 1.5;
+        }
+
+        .campo input:focus,
+        .campo textarea:focus {
+            outline: none;
+            border-color: #2f6fad;
+            background-color: white;
+        }
+
+        .separador {
+            border: none;
+            border-top: 1px solid #e6ebf0;
+            margin: 8px 0 16px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 11px;
+            background-color: #2f6fad;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #275e92;
+        }
+
+        .links {
+            margin-top: 18px;
+            text-align: center;
+        }
+
+        .links a {
+            font-size: 0.9rem;
+            color: #2f6fad;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .fila {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-contenido">
+        <a class="logo" th:href="@{/}">BolsaEmpleo</a>
+
+        <div class="nav-links">
+            <a th:href="@{/}">Inicio</a>
+            <a th:href="@{/login}">Iniciar sesión</a>
+        </div>
+    </div>
+</nav>
+
+<div class="pagina">
+    <div class="contenedor">
+        <div class="card">
+            <h1>Registro de empresa</h1>
+            <p class="subtitulo">Completa los datos para registrar una empresa en la plataforma.</p>
+
+            <div class="alerta-error" th:if="${error}" th:text="${error}"></div>
+
+            <form th:action="@{/registro/empresa}" method="post">
+                <div class="campo">
+                    <label for="nombre">Nombre de la empresa</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+
+                <div class="fila">
+                    <div class="campo">
+                        <label for="localizacion">Localización</label>
+                        <input type="text" id="localizacion" name="localizacion" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="telefono">Teléfono</label>
+                        <input type="text" id="telefono" name="telefono" required>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label for="correo">Correo electrónico</label>
+                    <input type="email" id="correo" name="correo" required>
+                </div>
+
+                <div class="campo">
+                    <label for="descripcion">Descripción de la empresa</label>
+                    <textarea id="descripcion" name="descripcion" required></textarea>
+                </div>
+
+                <hr class="separador">
+
+                <div class="campo">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <button type="submit">Registrar empresa</button>
+            </form>
+
+            <div class="links">
+                <a th:href="@{/login}">¿Ya tienes cuenta? Inicia sesión</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

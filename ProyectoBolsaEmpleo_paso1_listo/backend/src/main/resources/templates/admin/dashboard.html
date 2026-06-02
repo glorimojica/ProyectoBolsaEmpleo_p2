@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <title>Dashboard Admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            background-color: #2c3e6b;
+            padding: 14px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav .logo {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        nav .nav-links a {
+            color: rgba(255,255,255,0.88);
+            text-decoration: none;
+            font-size: 0.93rem;
+        }
+
+        nav .nav-links a:hover {
+            color: white;
+        }
+
+        nav .nav-links .btn-nav {
+            background-color: rgba(255,255,255,0.12);
+            padding: 8px 14px;
+            border-radius: 6px;
+            color: white;
+        }
+
+        .pagina {
+            flex: 1;
+            padding: 40px 20px;
+        }
+
+        .contenedor {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            background-color: #2c3e6b;
+            color: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 28px;
+        }
+
+        .hero h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: rgba(255,255,255,0.8);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+        }
+
+        .opcion {
+            background: white;
+            border: 1px solid #dde3ed;
+            border-radius: 10px;
+            padding: 24px;
+        }
+
+        .opcion h2 {
+            font-size: 1.1rem;
+            color: #2c3e6b;
+            margin-bottom: 8px;
+        }
+
+        .opcion p {
+            font-size: 0.92rem;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.92rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-empresas {
+            background-color: #f0b429;
+            color: #333;
+        }
+
+        .btn-empresas:hover {
+            background-color: #d9a020;
+        }
+
+        .btn-oferentes {
+            background-color: #1abc9c;
+            color: white;
+        }
+
+        .btn-oferentes:hover {
+            background-color: #17a589;
+        }
+
+        .btn-caracteristicas {
+            background-color: #4a90d9;
+            color: white;
+        }
+
+        .btn-caracteristicas:hover {
+            background-color: #3a7fc5;
+        }
+
+        .btn-logout {
+            background-color: #eaf4fb;
+            color: #1a6da3;
+            border: 1px solid #aed6f1;
+        }
+
+        .btn-logout:hover {
+            background-color: #dbeefa;
+        }
+
+        footer {
+            background-color: #2c3e6b;
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 16px;
+            font-size: 0.82rem;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a class="logo" th:href="@{/admin/dashboard}">💼 BolsaEmpleos</a>
+
+    <div class="nav-links">
+        <a th:href="@{/admin/caracteristicas}" class="btn-nav">Gestionar características</a>
+    </div>
+</nav>
+
+<div class="pagina">
+    <div class="contenedor">
+        <div class="hero">
+            <h1>Bienvenido, administrador</h1>
+            <p>Desde este panel puedes revisar registros pendientes, aprobar empresas y oferentes, y gestionar el acceso a la plataforma.</p>
+        </div>
+
+        <div class="grid">
+            <div class="opcion">
+                <h2>Empresas pendientes</h2>
+                <p>Consulta las empresas registradas que aún están esperando aprobación para poder ingresar al sistema.</p>
+                <a th:href="@{/admin/empresas-pendientes}" class="btn btn-empresas">Ver empresas pendientes</a>
+            </div>
+
+            <div class="opcion">
+                <h2>Oferentes pendientes</h2>
+                <p>Revisa los candidatos pendientes y decide si deseas aprobar su acceso a la plataforma.</p>
+                <a th:href="@{/admin/oferentes-pendientes}" class="btn btn-oferentes">Ver oferentes pendientes</a>
+            </div>
+
+            <div class="opcion">
+                <h2>Gestionar características</h2>
+                <p>Administra las categorías y subcategorías que luego usarán los oferentes al registrar sus habilidades.</p>
+                <a th:href="@{/admin/caracteristicas}" class="btn btn-caracteristicas">Gestionar características</a>
+            </div>
+
+            <div class="opcion">
+                <h2>Reporte PDF mensual</h2>
+                <p>Genera un reporte PDF con los puestos registrados en un mes y año específicos.</p>
+
+                <form th:action="@{/admin/reportes/puestos-pdf}" method="get" target="_blank">
+                    <label for="mes">Mes:</label>
+                    <input type="number" id="mes" name="mes" min="1" max="12" required
+                           style="width:100%; margin:8px 0 12px 0; padding:10px; border:1px solid #ccd6e0; border-radius:6px;">
+
+                    <label for="anio">Año:</label>
+                    <input type="number" id="anio" name="anio" min="2025" required
+                           style="width:100%; margin:8px 0 16px 0; padding:10px; border:1px solid #ccd6e0; border-radius:6px;">
+
+                    <button type="submit" class="btn btn-caracteristicas">Generar PDF</button>
+                </form>
+            </div>
+
+            <div class="opcion">
+                <h2>Cerrar sesión</h2>
+                <p>Finaliza tu sesión actual de manera segura cuando hayas terminado de administrar el sistema.</p>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-logout">Cerrar sesión</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
