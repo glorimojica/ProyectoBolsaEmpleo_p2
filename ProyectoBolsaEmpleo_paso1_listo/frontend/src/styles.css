@@ -196,4 +196,12 @@ textarea {
     flex-direction: column;
     gap: 10px;
   }
+  .success {
+    color: #2e7d32;
+    font-weight: bold;
+    background: #e8f5e9;
+    border: 1px solid #a5d6a7;
+    padding: 10px;
+    border-radius: 4px;
+  }
 }
