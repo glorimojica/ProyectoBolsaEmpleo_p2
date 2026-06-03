@@ -1,10 +1,12 @@
 package cr.ac.una.proyectobolsaempleo.config;
 
 import cr.ac.una.proyectobolsaempleo.model.Administrador;
+import cr.ac.una.proyectobolsaempleo.model.Caracteristica;
 import cr.ac.una.proyectobolsaempleo.model.Empresa;
 import cr.ac.una.proyectobolsaempleo.model.Oferente;
 import cr.ac.una.proyectobolsaempleo.model.Usuario;
 import cr.ac.una.proyectobolsaempleo.repository.AdministradorRepository;
+import cr.ac.una.proyectobolsaempleo.repository.CaracteristicaRepository;
 import cr.ac.una.proyectobolsaempleo.repository.EmpresaRepository;
 import cr.ac.una.proyectobolsaempleo.repository.OferenteRepository;
 import cr.ac.una.proyectobolsaempleo.repository.UsuarioRepository;
@@ -12,8 +14,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import cr.ac.una.proyectobolsaempleo.model.Caracteristica;
-import cr.ac.una.proyectobolsaempleo.repository.CaracteristicaRepository;
 
 @Configuration
 public class DataLoader {
@@ -29,28 +29,36 @@ public class DataLoader {
 
         return args -> {
 
-            // ADMIN
-            if (usuarioRepository.findByCorreo("admin@admin.com").isEmpty()) {
-                Usuario usuarioAdmin = Usuario.builder()
-                        .correo("admin@admin.com")
-                        .password(passwordEncoder.encode("1234"))
-                        .rol("ADMIN")
-                        .activo(true)
-                        .estado("APROBADO")
-                        .comentarioRevision(null)
-                        .build();
+            Usuario usuarioAdmin = usuarioRepository.findByCorreo("admin@admin.com")
+                    .orElseGet(() -> {
+                        Usuario nuevoAdmin = Usuario.builder()
+                                .correo("admin@admin.com")
+                                .password(passwordEncoder.encode("1234"))
+                                .rol("ADMIN")
+                                .activo(true)
+                                .estado("APROBADO")
+                                .comentarioRevision(null)
+                                .build();
 
-                usuarioRepository.save(usuarioAdmin);
+                        return usuarioRepository.save(nuevoAdmin);
+                    });
 
-                Administrador admin = Administrador.builder()
-                        .nombre("Administrador Principal")
-                        .usuario(usuarioAdmin)
-                        .build();
+            administradorRepository.findByUsuarioCorreo("admin@admin.com")
+                    .ifPresentOrElse(admin -> {
+                        if (admin.getIdentificacion() == null || admin.getIdentificacion().isBlank()) {
+                            admin.setIdentificacion("admin");
+                            administradorRepository.save(admin);
+                        }
+                    }, () -> {
+                        Administrador admin = Administrador.builder()
+                                .identificacion("admin")
+                                .nombre("Administrador Principal")
+                                .usuario(usuarioAdmin)
+                                .build();
 
-                administradorRepository.save(admin);
-            }
+                        administradorRepository.save(admin);
+                    });
 
-            // EMPRESA
             if (usuarioRepository.findByCorreo("empresa@empresa.com").isEmpty()) {
                 Usuario usuarioEmpresa = Usuario.builder()
                         .correo("empresa@empresa.com")
@@ -74,7 +82,6 @@ public class DataLoader {
                 empresaRepository.save(empresa);
             }
 
-            // OFERENTE
             if (usuarioRepository.findByCorreo("oferente@oferente.com").isEmpty()) {
                 Usuario usuarioOferente = Usuario.builder()
                         .correo("oferente@oferente.com")
