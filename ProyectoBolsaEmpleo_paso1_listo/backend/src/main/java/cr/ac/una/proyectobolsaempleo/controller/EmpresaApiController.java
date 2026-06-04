@@ -15,6 +15,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+
 @RestController
 @RequestMapping("/api/v1/empresa")
 @RequiredArgsConstructor
@@ -30,6 +38,17 @@ public class EmpresaApiController {
     @GetMapping("/puestos/{id}")
     public ResponseEntity<PuestoEmpresaResponse> obtenerMiPuesto(@PathVariable Long id) {
         return ResponseEntity.ok(empresaService.obtenerMiPuesto(id));
+    }
+
+    @GetMapping("/candidatos/{id}/cv")
+    public ResponseEntity<Resource> verCvCandidato(@PathVariable Long id) throws MalformedURLException {
+        Path ruta = empresaService.obtenerRutaCvCandidato(id);
+        Resource recurso = new UrlResource(ruta.toUri());
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + ruta.getFileName() + "\"")
+                .body(recurso);
     }
 
     @PostMapping("/puestos")

@@ -9,17 +9,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PuestoRepository extends JpaRepository<Puesto, Long> {
+
     List<Puesto> findByEmpresaId(Long empresaId);
-
     List<Puesto> findByEmpresaIdOrderByFechaCreacionDesc(Long empresaId);
-
     Optional<Puesto> findByIdAndEmpresaId(Long id, Long empresaId);
-
     List<Puesto> findTop5ByPublicoTrueAndActivoTrueOrderByIdDesc();
-
     List<Puesto> findTop5ByPublicoTrueAndActivoTrueOrderByFechaCreacionDesc();
-
     Optional<Puesto> findByIdAndPublicoTrueAndActivoTrue(Long id);
+    List<Puesto> findByActivoTrueOrderByFechaCreacionDesc();
 
     @Query("""
         SELECT DISTINCT p

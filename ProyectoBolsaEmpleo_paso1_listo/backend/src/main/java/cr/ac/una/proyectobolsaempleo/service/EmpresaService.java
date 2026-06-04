@@ -26,12 +26,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import org.springframework.beans.factory.annotation.Value;
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +48,9 @@ public class EmpresaService {
     private final PuestoCaracteristicaRepository puestoCaracteristicaRepository;
     private final OferenteRepository oferenteRepository;
     private final OferenteCaracteristicaRepository oferenteCaracteristicaRepository;
+
+    @Value("${app.upload.dir:uploads}")
+    private String uploadDir;
 
     @Transactional(readOnly = true)
     public List<PuestoEmpresaResponse> listarMisPuestos() {
@@ -146,6 +152,37 @@ public class EmpresaService {
                 .filter(candidato -> candidato.getRequisitosCumplidos() > 0)
                 .sorted(Comparator.comparing(CandidatoResponse::getPorcentajeCoincidencia).reversed())
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public Path obtenerRutaCvCandidato(Long oferenteId) {
+        obtenerEmpresaAutenticada();
+
+        Oferente oferente = oferenteRepository.findById(oferenteId)
+                .orElseThrow(() -> new EntityNotFoundException("Oferente no encontrado"));
+
+        if (oferente.getCvNombreArchivo() == null || oferente.getCvNombreArchivo().isBlank()) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "El candidato no tiene currículo registrado."
+            );
+        }
+
+        Path ruta = Paths.get(uploadDir)
+                .toAbsolutePath()
+                .normalize()
+                .resolve("cv")
+                .resolve(oferente.getCvNombreArchivo())
+                .normalize();
+
+        if (!Files.exists(ruta)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "El archivo del currículo no existe."
+            );
+        }
+
+        return ruta;
     }
 
     private CandidatoResponse calcularCoincidencia(Oferente oferente, List<PuestoCaracteristica> requisitos) {

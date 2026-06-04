@@ -9,8 +9,6 @@ import java.util.Optional;
 public interface OferenteRepository extends JpaRepository<Oferente, Long> {
 
     List<Oferente> findByUsuarioEstado(String estado);
-
     Optional<Oferente> findByUsuarioCorreo(String correo);
-
     List<Oferente> findByUsuarioEstadoAndUsuarioActivoTrue(String estado);
 }

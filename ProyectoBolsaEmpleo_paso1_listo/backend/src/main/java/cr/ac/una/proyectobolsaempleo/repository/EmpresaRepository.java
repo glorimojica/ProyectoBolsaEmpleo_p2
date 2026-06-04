@@ -7,5 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
+
     Optional<Empresa> findByUsuarioCorreo(String correo);
     List<Empresa> findByUsuarioEstado(String estado);}
