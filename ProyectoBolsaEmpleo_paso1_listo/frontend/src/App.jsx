@@ -15,6 +15,9 @@ import DashboardAdmin from "./pages/admin/DashboardAdmin";
 import DashboardEmpresa from "./pages/empresa/DashboardEmpresa";
 import DashboardOferente from "./pages/oferente/DashboardOferente";
 
+import EmpresasPendientes from "./pages/admin/EmpresasPendientes";
+import OferentesPendientes from "./pages/admin/OferentesPendientes";
+
 import "./styles.css";
 
 function App() {
@@ -36,6 +39,24 @@ function App() {
                             element={
                                 <ProtectedRoute rolesPermitidos={["ADMIN"]}>
                                     <DashboardAdmin />
+                                </ProtectedRoute>
+                            }
+                        />
+
+                        <Route
+                            path="/admin/empresas"
+                            element={
+                                <ProtectedRoute rolesPermitidos={["ADMIN"]}>
+                                    <EmpresasPendientes />
+                                </ProtectedRoute>
+                            }
+                        />
+
+                        <Route
+                            path="/admin/oferentes"
+                            element={
+                                <ProtectedRoute rolesPermitidos={["ADMIN"]}>
+                                    <OferentesPendientes />
                                 </ProtectedRoute>
                             }
                         />

@@ -161,7 +161,48 @@ textarea {
   justify-content: center;
   align-items: center;
 }
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+  margin: 24px 0;
+}
 
+.dashboard-card {
+  display: block;
+  padding: 20px;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  color: #222;
+  font-weight: bold;
+}
+
+.dashboard-card:hover {
+  background: #fff1f1;
+  border-color: #e57373;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 18px;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.data-table th {
+  background: #f5f5f5;
+}
+
+.data-table td button {
+  margin-right: 8px;
+}
 .modal {
   background: white;
   width: 420px;

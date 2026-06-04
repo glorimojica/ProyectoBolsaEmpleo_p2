@@ -5,11 +5,11 @@ function RegistroOferente() {
     const [form, setForm] = useState({
         identificacion: "",
         nombre: "",
-        primerApellido: "",
+        apellido: "",
         nacionalidad: "",
         telefono: "",
         correo: "",
-        lugarResidencia: "",
+        residencia: "",
         password: "",
     });
 
@@ -42,7 +42,7 @@ function RegistroOferente() {
             setForm({
                 identificacion: "",
                 nombre: "",
-                primerApellido: "",
+                apellido: "",
                 nacionalidad: "",
                 telefono: "",
                 correo: "",
@@ -84,9 +84,9 @@ function RegistroOferente() {
 
                 <label>Primer apellido</label>
                 <input
-                    name="primerApellido"
+                    name="apellido"
                     type="text"
-                    value={form.primerApellido}
+                    value={form.apellido}
                     onChange={handleChange}
                     required
                 />
@@ -120,9 +120,9 @@ function RegistroOferente() {
 
                 <label>Lugar de residencia</label>
                 <input
-                    name="lugarResidencia"
+                    name="residencia"
                     type="text"
-                    value={form.lugarResidencia}
+                    value={form.residencia}
                     onChange={handleChange}
                     required
                 />
