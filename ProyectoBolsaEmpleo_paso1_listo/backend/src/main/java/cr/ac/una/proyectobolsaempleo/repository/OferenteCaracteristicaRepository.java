@@ -15,4 +15,7 @@ public interface OferenteCaracteristicaRepository extends JpaRepository<Oferente
     boolean existsByOferenteIdAndCaracteristicaId(Long oferenteId, Long caracteristicaId);
 
     Optional<OferenteCaracteristica> findByOferenteIdAndCaracteristicaId(Long oferenteId, Long caracteristicaId);
+
+    boolean existsByCaracteristica_Id(Long caracteristicaId);
+
 }

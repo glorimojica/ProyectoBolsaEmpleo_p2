@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PuestoRepository extends JpaRepository<Puesto, Long> {
-
     List<Puesto> findByEmpresaId(Long empresaId);
+
+    List<Puesto> findByEmpresaIdOrderByFechaCreacionDesc(Long empresaId);
 
     Optional<Puesto> findByIdAndEmpresaId(Long id, Long empresaId);
 

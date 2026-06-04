@@ -8,6 +8,12 @@ import java.util.Optional;
 
 public interface PuestoCaracteristicaRepository extends JpaRepository<PuestoCaracteristica, Long> {
     List<PuestoCaracteristica> findByPuestoId(Long puestoId);
+
     Optional<PuestoCaracteristica> findByIdAndPuestoId(Long id, Long puestoId);
+
     boolean existsByPuestoIdAndCaracteristicaId(Long puestoId, Long caracteristicaId);
+
+    boolean existsByCaracteristica_Id(Long caracteristicaId);
+
+    Optional<PuestoCaracteristica> findByPuestoIdAndCaracteristicaId(Long puestoId, Long caracteristicaId);
 }

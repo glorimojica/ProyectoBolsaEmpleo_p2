@@ -7,11 +7,17 @@ import java.util.List;
 
 public interface CaracteristicaRepository extends JpaRepository<Caracteristica, Long> {
 
+    List<Caracteristica> findAllByOrderByNombreAsc();
+
+    List<Caracteristica> findByHijasIsEmptyOrderByNombreAsc();
+
     List<Caracteristica> findByPadreIsNullOrderByNombreAsc();
 
     List<Caracteristica> findByPadreIdOrderByNombreAsc(Long padreId);
 
-    List<Caracteristica> findAllByOrderByNombreAsc();
+    boolean existsByPadre_Id(Long padreId);
 
-    List<Caracteristica> findByHijasIsEmptyOrderByNombreAsc();
+    boolean existsByNombreIgnoreCaseAndPadreIsNull(String nombre);
+
+    boolean existsByNombreIgnoreCaseAndPadre_Id(String nombre, Long padreId);
 }

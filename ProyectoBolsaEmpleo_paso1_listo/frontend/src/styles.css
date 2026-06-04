@@ -152,7 +152,68 @@ textarea {
   color: #c62828;
   font-weight: bold;
 }
+.form-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 
+.tree-container {
+  margin-top: 18px;
+  border: 1px solid #ddd;
+  padding: 18px;
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+.tree-root,
+.tree-child {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tree-child {
+  padding-left: 28px;
+  margin-top: 8px;
+}
+
+.tree-item {
+  margin-bottom: 8px;
+}
+
+.tree-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.tree-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.tag-hoja,
+.tag-padre {
+  margin-left: 8px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.tag-hoja {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.tag-padre {
+  background: #e3f2fd;
+  color: #1565c0;
+}
 .modal-overlay {
   position: fixed;
   inset: 0;

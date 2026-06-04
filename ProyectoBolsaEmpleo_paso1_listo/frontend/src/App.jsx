@@ -12,11 +12,17 @@ import RegistroEmpresa from "./pages/public/RegistroEmpresa";
 import RegistroOferente from "./pages/public/RegistroOferente";
 
 import DashboardAdmin from "./pages/admin/DashboardAdmin";
-import DashboardEmpresa from "./pages/empresa/DashboardEmpresa";
-import DashboardOferente from "./pages/oferente/DashboardOferente";
-
 import EmpresasPendientes from "./pages/admin/EmpresasPendientes";
 import OferentesPendientes from "./pages/admin/OferentesPendientes";
+import CaracteristicasAdmin from "./pages/admin/CaracteristicasAdmin";
+
+import DashboardEmpresa from "./pages/empresa/DashboardEmpresa";
+import MisPuestos from "./pages/empresa/MisPuestos";
+import CrearPuesto from "./pages/empresa/CrearPuesto";
+import RequisitosPuesto from "./pages/empresa/RequisitosPuesto";
+import CandidatosPuesto from "./pages/empresa/CandidatosPuesto";
+
+import DashboardOferente from "./pages/oferente/DashboardOferente";
 
 import "./styles.css";
 
@@ -62,10 +68,55 @@ function App() {
                         />
 
                         <Route
+                            path="/admin/caracteristicas"
+                            element={
+                                <ProtectedRoute rolesPermitidos={["ADMIN"]}>
+                                    <CaracteristicasAdmin />
+                                </ProtectedRoute>
+                            }
+                        />
+
+                        <Route
                             path="/empresa/dashboard"
                             element={
                                 <ProtectedRoute rolesPermitidos={["EMPRESA"]}>
                                     <DashboardEmpresa />
+                                </ProtectedRoute>
+                            }
+                        />
+
+                        <Route
+                            path="/empresa/puestos"
+                            element={
+                                <ProtectedRoute rolesPermitidos={["EMPRESA"]}>
+                                    <MisPuestos />
+                                </ProtectedRoute>
+                            }
+                        />
+
+                        <Route
+                            path="/empresa/puestos/nuevo"
+                            element={
+                                <ProtectedRoute rolesPermitidos={["EMPRESA"]}>
+                                    <CrearPuesto />
+                                </ProtectedRoute>
+                            }
+                        />
+
+                        <Route
+                            path="/empresa/puestos/:id/requisitos"
+                            element={
+                                <ProtectedRoute rolesPermitidos={["EMPRESA"]}>
+                                    <RequisitosPuesto />
+                                </ProtectedRoute>
+                            }
+                        />
+
+                        <Route
+                            path="/empresa/puestos/:id/candidatos"
+                            element={
+                                <ProtectedRoute rolesPermitidos={["EMPRESA"]}>
+                                    <CandidatosPuesto />
                                 </ProtectedRoute>
                             }
                         />
