@@ -6,6 +6,7 @@ import {
     listarCaracteristicasAdmin,
     listarCaracteristicasPlanasAdmin,
 } from "../../api/caracteristicaApi";
+import BackToDashboard from "../../components/BackToDashboard";
 
 function CaracteristicasAdmin() {
     const [arbol, setArbol] = useState([]);
@@ -231,6 +232,7 @@ function CaracteristicasAdmin() {
             ) : (
                 <div className="tree-container">{renderArbol(arbol)}</div>
             )}
+            <BackToDashboard tipo="admin" />
         </section>
     );
 }

@@ -19,7 +19,8 @@ import cr.ac.una.proyectobolsaempleo.repository.PuestoRepository;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
-
+import org.springframework.context.annotation.Profile;
+@Profile("legacy")
 @Controller
 @RequestMapping("/admin")
 public class AdminController {

@@ -8,6 +8,7 @@ import cr.ac.una.proyectobolsaempleo.repository.OferenteCaracteristicaRepository
 import cr.ac.una.proyectobolsaempleo.repository.OferenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
-
+@Profile("legacy")
 @Controller
 @RequestMapping("/oferente")
 public class OferenteController {

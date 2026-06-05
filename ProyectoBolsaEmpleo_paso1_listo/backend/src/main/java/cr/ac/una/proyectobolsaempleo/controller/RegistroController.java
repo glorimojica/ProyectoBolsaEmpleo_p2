@@ -7,11 +7,12 @@ import cr.ac.una.proyectobolsaempleo.repository.EmpresaRepository;
 import cr.ac.una.proyectobolsaempleo.repository.OferenteRepository;
 import cr.ac.una.proyectobolsaempleo.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+@Profile("legacy")
 @Controller
 @RequestMapping("/registro")
 public class RegistroController {

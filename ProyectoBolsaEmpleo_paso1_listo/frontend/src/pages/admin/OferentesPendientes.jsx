@@ -4,6 +4,7 @@ import {
     listarOferentesPendientes,
     rechazarOferente,
 } from "../../api/adminApi.js";
+import BackToDashboard from "../../components/BackToDashboard";
 
 function OferentesPendientes() {
     const [oferentes, setOferentes] = useState([]);
@@ -90,6 +91,7 @@ function OferentesPendientes() {
                     </tbody>
                 </table>
             )}
+            <BackToDashboard tipo="admin" />
         </section>
     );
 }

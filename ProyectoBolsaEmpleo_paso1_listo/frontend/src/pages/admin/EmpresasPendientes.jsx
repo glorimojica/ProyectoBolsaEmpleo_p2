@@ -4,6 +4,7 @@ import {
     listarEmpresasPendientes,
     rechazarEmpresa,
 } from "../../api/adminApi";
+import BackToDashboard from "../../components/BackToDashboard";
 
 function EmpresasPendientes() {
     const [empresas, setEmpresas] = useState([]);
@@ -90,6 +91,7 @@ function EmpresasPendientes() {
                     </tbody>
                 </table>
             )}
+            <BackToDashboard tipo="admin" />
         </section>
     );
 }

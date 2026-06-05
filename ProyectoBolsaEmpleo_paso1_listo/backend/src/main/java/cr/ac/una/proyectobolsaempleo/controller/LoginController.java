@@ -1,9 +1,10 @@
 package cr.ac.una.proyectobolsaempleo.controller;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-
+@Profile("legacy")
 @Controller
 public class LoginController {
 
