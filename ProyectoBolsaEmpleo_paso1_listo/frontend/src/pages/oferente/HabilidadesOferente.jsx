@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
 import { obtenerCaracteristicas } from "../../api/publicApi";
-import { agregarRequisito, obtenerPuesto } from "../../api/empresaApi";
+import {
+    eliminarHabilidad,
+    guardarHabilidad,
+    listarHabilidades,
+} from "../../api/oferenteApi";
 import BackToDashboard from "../../components/BackToDashboard";
 
-function RequisitosPuesto() {
-    const { id } = useParams();
-
-    const [puesto, setPuesto] = useState(null);
+function HabilidadesOferente() {
+    const [habilidades, setHabilidades] = useState([]);
     const [caracteristicas, setCaracteristicas] = useState([]);
 
     const [form, setForm] = useState({
@@ -40,15 +41,13 @@ function RequisitosPuesto() {
         try {
             setError("");
 
-            const [puestoData, caracteristicasData] = await Promise.all([
-                obtenerPuesto(id),
+            const [habilidadesData, caracteristicasData] = await Promise.all([
+                listarHabilidades(),
                 obtenerCaracteristicas(),
             ]);
 
-            setPuesto(puestoData);
-
-            const hojas = convertirArbolAListaHojas(caracteristicasData);
-            setCaracteristicas(hojas);
+            setHabilidades(habilidadesData);
+            setCaracteristicas(convertirArbolAListaHojas(caracteristicasData));
         } catch (err) {
             setError(err.message);
         }
@@ -56,7 +55,7 @@ function RequisitosPuesto() {
 
     useEffect(() => {
         cargarDatos();
-    }, [id]);
+    }, []);
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -74,12 +73,12 @@ function RequisitosPuesto() {
         setError("");
 
         try {
-            await agregarRequisito(id, {
+            await guardarHabilidad({
                 caracteristicaId: Number(form.caracteristicaId),
                 nivel: Number(form.nivel),
             });
 
-            setMensaje("Requisito guardado correctamente.");
+            setMensaje("Habilidad guardada correctamente.");
 
             setForm({
                 caracteristicaId: "",
@@ -92,24 +91,35 @@ function RequisitosPuesto() {
         }
     }
 
+    async function handleEliminar(id) {
+        const confirmar = window.confirm("¿Seguro que deseas eliminar esta habilidad?");
+
+        if (!confirmar) {
+            return;
+        }
+
+        try {
+            setMensaje("");
+            setError("");
+
+            await eliminarHabilidad(id);
+
+            setMensaje("Habilidad eliminada correctamente.");
+            await cargarDatos();
+        } catch (err) {
+            setError(err.message);
+        }
+    }
+
     return (
         <section>
-            <h1>Requisitos del puesto</h1>
-
-            {puesto && (
-                <>
-                    <h2>{puesto.titulo}</h2>
-                    <p>{puesto.descripcion}</p>
-                    <p>Salario: ₡ {puesto.salario}</p>
-                    <p>Tipo: {puesto.publico ? "Público" : "Privado"}</p>
-                </>
-            )}
+            <h1>Mis habilidades</h1>
 
             {mensaje && <p className="success">{mensaje}</p>}
             {error && <p className="error">{error}</p>}
 
             <form className="form-card" onSubmit={handleSubmit}>
-                <h3>Agregar requisito</h3>
+                <h3>Agregar o actualizar habilidad</h3>
 
                 <label>Característica</label>
                 <select
@@ -127,7 +137,7 @@ function RequisitosPuesto() {
                     ))}
                 </select>
 
-                <label>Nivel requerido</label>
+                <label>Nivel</label>
                 <select name="nivel" value={form.nivel} onChange={handleChange}>
                     <option value="1">Nivel 1</option>
                     <option value="2">Nivel 2</option>
@@ -136,39 +146,45 @@ function RequisitosPuesto() {
                     <option value="5">Nivel 5</option>
                 </select>
 
-                <button type="submit">Guardar requisito</button>
+                <button type="submit">Guardar habilidad</button>
             </form>
 
-            <h3>Requisitos actuales</h3>
+            <h2>Habilidades registradas</h2>
 
-            {!puesto || puesto.requisitos.length === 0 ? (
-                <p>Este puesto todavía no tiene requisitos.</p>
+            {habilidades.length === 0 ? (
+                <p>No tienes habilidades registradas.</p>
             ) : (
                 <table className="data-table">
                     <thead>
                     <tr>
                         <th>Característica</th>
                         <th>Nivel</th>
+                        <th>Acciones</th>
                     </tr>
                     </thead>
 
                     <tbody>
-                    {puesto.requisitos.map((req) => (
-                        <tr key={req.caracteristicaId}>
-                            <td>{req.nombreCompleto}</td>
-                            <td>{req.nivel}</td>
+                    {habilidades.map((habilidad) => (
+                        <tr key={habilidad.id}>
+                            <td>{habilidad.nombreCompleto}</td>
+                            <td>{habilidad.nivel}</td>
+                            <td>
+                                <button
+                                    type="button"
+                                    onClick={() => handleEliminar(habilidad.id)}
+                                >
+                                    Eliminar
+                                </button>
+                            </td>
                         </tr>
                     ))}
                     </tbody>
                 </table>
             )}
-
-            <p>
-                <Link to="/empresa/puestos">Volver a mis puestos</Link>
-            </p>
-            <BackToDashboard tipo="empresa" />
+            <BackToDashboard tipo="oferente" />
         </section>
+
     );
 }
 
-export default RequisitosPuesto;
+export default HabilidadesOferente;

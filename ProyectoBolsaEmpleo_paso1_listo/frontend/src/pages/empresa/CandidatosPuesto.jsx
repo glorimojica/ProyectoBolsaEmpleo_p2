@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { buscarCandidatos, obtenerPuesto } from "../../api/empresaApi";
+import {
+    buscarCandidatos,
+    obtenerCvCandidato,
+    obtenerPuesto,
+} from "../../api/empresaApi";
+import BackToDashboard from "../../components/BackToDashboard";
 
 function CandidatosPuesto() {
     const { id } = useParams();
@@ -29,6 +34,19 @@ function CandidatosPuesto() {
         cargarDatos();
     }, [id]);
 
+    async function handleVerCv(oferenteId) {
+        try {
+            setError("");
+
+            const blob = await obtenerCvCandidato(oferenteId);
+            const url = window.URL.createObjectURL(blob);
+
+            window.open(url, "_blank");
+        } catch (err) {
+            setError(err.message);
+        }
+    }
+
     return (
         <section>
             <h1>Candidatos compatibles</h1>
@@ -53,6 +71,7 @@ function CandidatosPuesto() {
                         <th>Teléfono</th>
                         <th>Residencia</th>
                         <th>Coincidencia</th>
+                        <th>CV</th>
                     </tr>
                     </thead>
 
@@ -66,7 +85,15 @@ function CandidatosPuesto() {
                             <td>
                                 {candidato.requisitosCumplidos}/{candidato.totalRequisitos}
                                 {" - "}
-                                {candidato.porcentajeCoincidencia.toFixed(1)}%
+                                {Number(candidato.porcentajeCoincidencia).toFixed(1)}%
+                            </td>
+                            <td>
+                                <button
+                                    type="button"
+                                    onClick={() => handleVerCv(candidato.oferenteId)}
+                                >
+                                    Ver CV
+                                </button>
                             </td>
                         </tr>
                     ))}

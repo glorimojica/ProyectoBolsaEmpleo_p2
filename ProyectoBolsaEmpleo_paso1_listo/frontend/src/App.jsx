@@ -24,6 +24,11 @@ import CandidatosPuesto from "./pages/empresa/CandidatosPuesto";
 
 import DashboardOferente from "./pages/oferente/DashboardOferente";
 
+import PerfilOferente from "./pages/oferente/PerfilOferente";
+import HabilidadesOferente from "./pages/oferente/HabilidadesOferente";
+import SubirCV from "./pages/oferente/SubirCV";
+import PuestosDisponibles from "./pages/oferente/PuestosDisponibles";
+
 import "./styles.css";
 
 function App() {
@@ -48,7 +53,41 @@ function App() {
                                 </ProtectedRoute>
                             }
                         />
+                        <Route
+                            path="/oferente/perfil"
+                            element={
+                                <ProtectedRoute rolesPermitidos={["OFERENTE"]}>
+                                    <PerfilOferente />
+                                </ProtectedRoute>
+                            }
+                        />
 
+                        <Route
+                            path="/oferente/habilidades"
+                            element={
+                                <ProtectedRoute rolesPermitidos={["OFERENTE"]}>
+                                    <HabilidadesOferente />
+                                </ProtectedRoute>
+                            }
+                        />
+
+                        <Route
+                            path="/oferente/cv"
+                            element={
+                                <ProtectedRoute rolesPermitidos={["OFERENTE"]}>
+                                    <SubirCV />
+                                </ProtectedRoute>
+                            }
+                        />
+
+                        <Route
+                            path="/oferente/puestos"
+                            element={
+                                <ProtectedRoute rolesPermitidos={["OFERENTE"]}>
+                                    <PuestosDisponibles />
+                                </ProtectedRoute>
+                            }
+                        />
                         <Route
                             path="/admin/empresas"
                             element={

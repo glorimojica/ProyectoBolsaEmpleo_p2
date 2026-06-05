@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { desactivarPuesto, listarMisPuestos } from "../../api/empresaApi";
+import BackToDashboard from "../../components/BackToDashboard";
 
 function MisPuestos() {
     const [puestos, setPuestos] = useState([]);
@@ -98,7 +99,9 @@ function MisPuestos() {
                     </tbody>
                 </table>
             )}
+            <BackToDashboard tipo="empresa" />
         </section>
+
     );
 }
 

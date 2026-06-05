@@ -285,11 +285,23 @@ textarea {
     padding-left: 0;
     padding-right: 0;
   }
-
+  .back-dashboard {
+    margin-bottom: 18px;
+  }
   .main-content {
     width: 95%;
   }
+  .info-card {
+    border: 1px solid #ddd;
+    background: #fafafa;
+    padding: 14px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+  }
 
+  .info-card p {
+    margin: 6px 0;
+  }
   .search-layout {
     grid-template-columns: 1fr;
   }

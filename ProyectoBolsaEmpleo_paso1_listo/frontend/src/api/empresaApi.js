@@ -71,3 +71,18 @@ export async function buscarCandidatos(puestoId) {
 
     return handleResponse(response, "No se pudieron cargar los candidatos");
 }
+export async function obtenerCvCandidato(oferenteId) {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${API_URL}/candidatos/${oferenteId}/cv`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error("No se pudo abrir el CV del candidato");
+    }
+
+    return response.blob();
+}

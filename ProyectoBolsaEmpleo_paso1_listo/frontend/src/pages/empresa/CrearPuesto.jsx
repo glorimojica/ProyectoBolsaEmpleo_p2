@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { crearPuesto } from "../../api/empresaApi";
+import BackToDashboard from "../../components/BackToDashboard";
 
 function CrearPuesto() {
     const navigate = useNavigate();
@@ -96,6 +97,7 @@ function CrearPuesto() {
                     {cargando ? "Guardando..." : "Crear puesto"}
                 </button>
             </form>
+            <BackToDashboard tipo="empresa" />
         </section>
     );
 }
