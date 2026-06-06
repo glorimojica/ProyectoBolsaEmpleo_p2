@@ -1,3 +1,5 @@
+import { handleResponse } from "./errorHandler";
+
 const API_URL = "/api/v1/auth";
 
 export async function loginRequest(usuario, password) {
@@ -12,13 +14,7 @@ export async function loginRequest(usuario, password) {
         }),
     });
 
-    const data = await response.json().catch(() => null);
-
-    if (!response.ok) {
-        throw new Error(data?.message || "No se pudo iniciar sesión");
-    }
-
-    return data;
+    return handleResponse(response, "No se pudo iniciar sesión");
 }
 
 export async function registerEmpresaRequest(empresa) {
@@ -30,13 +26,7 @@ export async function registerEmpresaRequest(empresa) {
         body: JSON.stringify(empresa),
     });
 
-    const data = await response.json().catch(() => null);
-
-    if (!response.ok) {
-        throw new Error(data?.message || "No se pudo registrar la empresa");
-    }
-
-    return data;
+    return handleResponse(response, "No se pudo registrar la empresa");
 }
 
 export async function registerOferenteRequest(oferente) {
@@ -48,13 +38,7 @@ export async function registerOferenteRequest(oferente) {
         body: JSON.stringify(oferente),
     });
 
-    const data = await response.json().catch(() => null);
-
-    if (!response.ok) {
-        throw new Error(data?.message || "No se pudo registrar el oferente");
-    }
-
-    return data;
+    return handleResponse(response, "No se pudo registrar el oferente");
 }
 
 export async function meRequest(token) {
@@ -64,9 +48,5 @@ export async function meRequest(token) {
         },
     });
 
-    if (!response.ok) {
-        throw new Error("Sesión inválida");
-    }
-
-    return response.json();
+    return handleResponse(response, "Sesión inválida");
 }

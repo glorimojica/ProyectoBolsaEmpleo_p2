@@ -1,4 +1,4 @@
-package cr.ac.una.proyectobolsaempleo.config;
+/* package cr.ac.una.proyectobolsaempleo.config;
 
 import cr.ac.una.proyectobolsaempleo.model.Administrador;
 import cr.ac.una.proyectobolsaempleo.model.Caracteristica;
@@ -73,7 +73,7 @@ public class DataLoader {
 
                 Empresa empresa = Empresa.builder()
                         .nombre("Empresa Demo")
-                        .telefono("2222-2222")
+                        .telefono("22222222")
                         .localizacion("Heredia")
                         .descripcion("Empresa de prueba")
                         .usuario(usuarioEmpresa)
@@ -98,7 +98,7 @@ public class DataLoader {
                         .identificacion("123456789")
                         .nombre("Juan")
                         .apellido("Pérez")
-                        .telefono("8888-8888")
+                        .telefono("88888888")
                         .residencia("Alajuela")
                         .nacionalidad("Costarricense")
                         .usuario(usuarioOferente)
@@ -117,4 +117,4 @@ public class DataLoader {
             }
         };
     }
-}
+}*/

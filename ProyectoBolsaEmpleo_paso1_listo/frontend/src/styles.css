@@ -149,8 +149,10 @@ textarea {
 }
 
 .error {
-  color: #c62828;
-  font-weight: bold;
+  color: #b00020;
+  white-space: pre-line;
+  margin: 10px 0;
+  font-weight: 500;
 }
 .form-actions {
   display: flex;
@@ -311,11 +313,8 @@ textarea {
     gap: 10px;
   }
   .success {
-    color: #2e7d32;
-    font-weight: bold;
-    background: #e8f5e9;
-    border: 1px solid #a5d6a7;
-    padding: 10px;
-    border-radius: 4px;
+    color: #0b7a28;
+    margin: 10px 0;
+    font-weight: 500;
   }
 }

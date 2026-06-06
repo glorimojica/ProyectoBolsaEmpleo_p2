@@ -1,3 +1,5 @@
+import { handleBlobResponse, handleResponse } from "./errorHandler";
+
 const API_URL = "/api/v1/empresa";
 
 function getAuthHeaders() {
@@ -9,14 +11,12 @@ function getAuthHeaders() {
     };
 }
 
-async function handleResponse(response, defaultMessage) {
-    const data = await response.json().catch(() => null);
+function getAuthHeadersSinContentType() {
+    const token = localStorage.getItem("token");
 
-    if (!response.ok) {
-        throw new Error(data?.message || data?.error || defaultMessage);
-    }
-
-    return data;
+    return {
+        Authorization: `Bearer ${token}`,
+    };
 }
 
 export async function listarMisPuestos() {
@@ -71,18 +71,11 @@ export async function buscarCandidatos(puestoId) {
 
     return handleResponse(response, "No se pudieron cargar los candidatos");
 }
-export async function obtenerCvCandidato(oferenteId) {
-    const token = localStorage.getItem("token");
 
+export async function obtenerCvCandidato(oferenteId) {
     const response = await fetch(`${API_URL}/candidatos/${oferenteId}/cv`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
+        headers: getAuthHeadersSinContentType(),
     });
 
-    if (!response.ok) {
-        throw new Error("No se pudo abrir el CV del candidato");
-    }
-
-    return response.blob();
+    return handleBlobResponse(response, "No se pudo abrir el CV del candidato");
 }

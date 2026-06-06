@@ -1,3 +1,5 @@
+import { handleResponse } from "./errorHandler";
+
 const API_URL = "/api/v1/admin";
 
 function getAuthHeaders() {
@@ -7,16 +9,6 @@ function getAuthHeaders() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
     };
-}
-
-async function handleResponse(response, defaultMessage) {
-    const data = await response.json().catch(() => null);
-
-    if (!response.ok) {
-        throw new Error(data?.message || data?.error || defaultMessage);
-    }
-
-    return data;
 }
 
 export async function listarEmpresasPendientes() {

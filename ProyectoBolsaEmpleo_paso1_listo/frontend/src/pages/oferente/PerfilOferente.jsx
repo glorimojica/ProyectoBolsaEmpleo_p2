@@ -44,7 +44,11 @@ function PerfilOferente() {
     }, []);
 
     function handleChange(e) {
-        const { name, value } = e.target;
+        let { name, value } = e.target;
+
+        if (name === "telefono") {
+            value = value.replace(/\D/g, "").slice(0, 8);
+        }
 
         setForm({
             ...form,
@@ -119,7 +123,11 @@ function PerfilOferente() {
                 <label>Teléfono</label>
                 <input
                     name="telefono"
-                    type="text"
+                    type="tel"
+                    inputMode="numeric"
+                    pattern="[0-9]{8}"
+                    maxLength="8"
+                    title="El teléfono debe contener exactamente 8 números"
                     value={form.telefono}
                     onChange={handleChange}
                     required

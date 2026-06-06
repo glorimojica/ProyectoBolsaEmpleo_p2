@@ -18,7 +18,15 @@ function RegistroOferente() {
     const [cargando, setCargando] = useState(false);
 
     function handleChange(e) {
-        const { name, value } = e.target;
+        let { name, value } = e.target;
+
+        if (name === "telefono") {
+            value = value.replace(/\D/g, "").slice(0, 8);
+        }
+
+        if (name === "identificacion") {
+            value = value.replace(/\D/g, "").slice(0, 12);
+        }
 
         setForm({
             ...form,
@@ -68,6 +76,10 @@ function RegistroOferente() {
                 <input
                     name="identificacion"
                     type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]{9,12}"
+                    maxLength="12"
+                    title="La identificación debe contener entre 9 y 12 números"
                     value={form.identificacion}
                     onChange={handleChange}
                     required
@@ -103,7 +115,11 @@ function RegistroOferente() {
                 <label>Teléfono</label>
                 <input
                     name="telefono"
-                    type="text"
+                    type="tel"
+                    inputMode="numeric"
+                    pattern="[0-9]{8}"
+                    maxLength="8"
+                    title="El teléfono debe contener exactamente 8 números"
                     value={form.telefono}
                     onChange={handleChange}
                     required
@@ -131,6 +147,7 @@ function RegistroOferente() {
                 <input
                     name="password"
                     type="password"
+                    minLength="4"
                     value={form.password}
                     onChange={handleChange}
                     required

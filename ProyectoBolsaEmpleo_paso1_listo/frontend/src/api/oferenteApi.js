@@ -1,3 +1,5 @@
+import { handleBlobResponse, handleResponse } from "./errorHandler";
+
 const API_URL = "/api/v1/oferente";
 
 function getAuthHeaders() {
@@ -15,16 +17,6 @@ function getAuthHeadersSinContentType() {
     return {
         Authorization: `Bearer ${token}`,
     };
-}
-
-async function handleResponse(response, defaultMessage) {
-    const data = await response.json().catch(() => null);
-
-    if (!response.ok) {
-        throw new Error(data?.message || data?.error || defaultMessage);
-    }
-
-    return data;
 }
 
 export async function obtenerPerfilOferente() {
@@ -87,6 +79,14 @@ export async function subirCv(archivo) {
 
 export function obtenerUrlMiCv() {
     return `${API_URL}/cv/archivo`;
+}
+
+export async function obtenerMiCv() {
+    const response = await fetch(`${API_URL}/cv/archivo`, {
+        headers: getAuthHeadersSinContentType(),
+    });
+
+    return handleBlobResponse(response, "No se pudo abrir el CV");
 }
 
 export async function listarPuestosDisponiblesOferente() {

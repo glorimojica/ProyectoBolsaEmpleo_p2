@@ -1,49 +1,48 @@
-# Proyecto Bolsa de Empleo - Paso 1
+## Se uso:
 
-Este paquete deja el proyecto separado en dos carpetas principales:
+- Backend:
 
-- `backend/`: proyecto Spring Boot original.
-- `frontend/`: proyecto React creado con estructura base de Vite.
-- `database/`: carpeta preparada para el script SQL final.
+* Java
+* Spring Boot
+* Spring Security
+* JWT
+* Spring Data JPA
+* Maven
+* MySQL
 
-## Ejecutar backend
+- Frontend
 
-Desde la carpeta raíz:
+* React
+* Vite
+* JavaScript
+* Fetch API
+* CSS
 
-```bash
-cd backend
-./mvnw spring-boot:run
-```
+## Roles del sistema
 
-En Windows PowerShell:
+* ADMIN: aprueba empresas, aprueba oferentes y gestiona características.
+* EMPRESA: publica puestos, agrega requisitos, busca candidatos y visualiza CV.
+* OFERENTE: edita su perfil, registra habilidades, sube CV y consulta puestos.
+* PUBLIC: ve puestos públicos, busca puestos públicos, se registra e inicia sesión.
 
-```powershell
-cd backend
-.\mvnw.cmd spring-boot:run
-```
 
-El backend levanta en:
+### Base de datos
 
-```text
-http://localhost:8080
-```
+1. Abrir MySQL Workbench.
+2. Abrir el archivo.
+3. Ejecutar todo el script.
+4. Verificar que se creó la base de datos `bolsa_empleo`.
+5. Cambiar la contraseña en properties.
 
-## Ejecutar frontend
 
-En otra terminal, desde la carpeta raíz:
+| Rol      | Usuario                                                           | Estado    |
+| -------- | ----------------------------------------------------------------- | --------- |
+| ADMIN    | admin                                                             | Aprobado  |
+| ADMIN    | [admin@admin.com](mailto:admin@admin.com)                         | Aprobado  |
+| EMPRESA  | [empresa@empresa.com](mailto:empresa@empresa.com)                 | Aprobado  |
+| OFERENTE | [oferente@oferente.com](mailto:oferente@oferente.com)             | Aprobado  |
+| EMPRESA  | [empresa.pendiente@demo.com](mailto:empresa.pendiente@demo.com)   | Pendiente |
+| OFERENTE | [oferente.pendiente@demo.com](mailto:oferente.pendiente@demo.com) | Pendiente |
+| EMPRESA  | [empresa.rechazada@demo.com](mailto:empresa.rechazada@demo.com)   | Rechazado |
+| OFERENTE | [oferente.rechazado@demo.com](mailto:oferente.rechazado@demo.com) | Rechazado |
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-El frontend levanta en:
-
-```text
-http://localhost:5173
-```
-
-## Nota
-
-En este paso no se migraron pantallas de Thymeleaf a React ni se cambió la seguridad a JWT. Solo se separó la estructura para preparar el proyecto para la modalidad SPA.
